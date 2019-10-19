@@ -1,29 +1,23 @@
 import { Controller, Get, Header, Param} from '@nestjs/common';
+import {CoinService} from './coin.service'
+import {Coin} from './interfaces/coin.inteface'
+import { thisTypeAnnotation } from '@babel/types';
 
 @Controller('coin')
 export class CoinController {
-    @Get()
+    constructor(private readonly coinService: CoinService) {}
+    
+    @Get(':id')
     @Header('asdasd', 'none')
-    findAll(@Param() params): string{
-        var request = require('request');
-        params.id = 1
-        var options = {
-          url: `https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=${params.id}`,
-          headers: {
-            'X-CMC_PRO_API_KEY': 'e66f7f7e-f2e9-40b4-9959-e98a669ded5c'
-          }
-        };
- 
-        function callback(error, response, body) {
-          if (!error && response.statusCode == 200) {
-            var info = JSON.parse(body);
-            console.log(info.stargazers_count + " Stars");
-            console.log(info.forks_count + " Forks");
-            console.log(body + 'zalupa');
-          }
-        }
- 
-        request(options, callback);
-        return 'Ok'
+    async getCoins(@Param() params){
+        console.log(params.id);
+        if (params.id ==='all'){
+            return this.coinService.getAll()    
+        }else return this.coinService.getCoins(params.id)
+        //this.coinService.getCoins()
+        //return `This action returns a #${params.id} cat`;
+        
     }
+    
+    
 }
