@@ -11,10 +11,11 @@ export class CoinService{
     private readonly all: Coin[] = []
     
     async getCoins(id:string): Promise<Coin[]>{
+        console.log('sssss')
         require('dotenv').config()
         var rp = require('request-promise');
-        console.log(process.env)
-        console.log('sssss')
+        //console.log(process.env)
+        
         var options = {
             url: `${process.env.coin_url}=${id}`,
             headers: {
@@ -50,6 +51,7 @@ export class CoinService{
             database: process.env.db_database,    
         })
         pool.query(`insert into public.coins (data) values ${js}`, (err, res) => {
+            //console.log(err,res)
             pool.end()
         })
     return this.coins

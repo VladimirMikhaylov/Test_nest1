@@ -1,30 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import {CoinService} from '../coin/coin.service';
 import { Cron, Interval, Timeout, NestSchedule } from 'nest-schedule';
-import { CoinController } from 'src/coin/coin.controller';
-
+import {CoinService} from '../coin/coin.service'
 
 @Injectable() // Only support SINGLETON scope
-
 export class ScheduleService extends NestSchedule {    
-  @Cron('0 0 0 * *', {
+  @Cron('0 0 2 * *', {
     startTime: new Date(), 
     endTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   })
   async cronJob() {
-    console.log('executssssing cron job');
+    console.log('executing cron job');
   }
   
   @Timeout(5000)
   onceJob() {
-    console.log('execsssssuting once job');
+    
   }
   
-  @Interval(2000)
+  @Interval(10000)
   intervalJob() {
-    console.log('executing inssssterval job');
+    require('dotenv').config()
+    let coinService = new CoinService
+    coinService.getCoins(process.env.query_values)
+    console.log('nice work, watch dbw');
     
     // if you want to cancel the job, you should return true;
-    //return true;
+    
   }
 }
