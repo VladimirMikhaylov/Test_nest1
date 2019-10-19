@@ -5,26 +5,25 @@ import { CoinController } from 'src/coin/coin.controller';
 
 
 @Injectable() // Only support SINGLETON scope
-export class ScheduleService extends NestSchedule {  
- 
-  @Cron('0 0 2 * * *', {
+
+export class ScheduleService extends NestSchedule {    
+  @Cron('0 0 0 * *', {
     startTime: new Date(), 
     endTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   })
   async cronJob() {
-    console.log('executing cron job');
+    console.log('executssssing cron job');
   }
   
   @Timeout(5000)
   onceJob() {
-    console.log('executing once job');
+    console.log('execsssssuting once job');
   }
   
   @Interval(2000)
   intervalJob() {
-    console.log('executing interval job');
-            //console.log(coinService.getAll()) 
-            //return this.coinService.getCoins(params.id)
+    console.log('executing inssssterval job');
+    
     // if you want to cancel the job, you should return true;
     //return true;
   }
